@@ -1,15 +1,8 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/material/styles';
-import '@fontsource/rubik-glitch';
-import '@fontsource/source-sans-pro';
-import '@fontsource/roboto-mono';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Preview from './layout/Preview';
-import './App.css'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainLayout from './layout/MainLayout';
+import SearchPage from './pages/SearchPage';
 
 
 const theme = createTheme({
@@ -17,27 +10,25 @@ const theme = createTheme({
     fontFamily: 'Roboto, Source Sans Pro, sans-serif, Roboto Mono, Rubik Glitch',
   },
 });
- 
-const previewRoutes = {
+
+const MainRoutes = {
   path: '/',
-  element: <Preview />,
+  element: <MainLayout />,
+  children: [
+    { element: <SearchPage />, path: '/', index: true },
+   
+  ],
 };
 
-const previewRouter = createBrowserRouter([previewRoutes]);
-
+const mainRouter = createBrowserRouter([MainRoutes]);
 
 function App() {
-  
   return (
     <ThemeProvider theme={theme}>
-
-
       <CssBaseline />
-      <RouterProvider router={previewRouter} /> 
-        
+      <RouterProvider router={mainRouter} />
     </ThemeProvider>
-
-  )
+  );
 }
 
-export default App
+export default App;

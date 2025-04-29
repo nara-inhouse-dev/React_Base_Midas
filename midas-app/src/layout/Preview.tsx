@@ -55,17 +55,7 @@ export default function Preview() {
                 src="archie-ai-bluec.png"
             />
             
-            <Typography variant='h4' sx={{ textAlign: 'center', marginTop: '20px' }}>
-                Enter Search Data 
-
-            </Typography>
-            <Stack spacing={2} direction="row" flexWrap="wrap" useFlexGap>
-          <TextField label="First Name" name="firstName"  />
-          <TextField label="Last Name" name="lastName"  />
-          <TextField label="CNumber" name="cnumber"  />
-          <TextField label="Number" name="number"  />
-          <Button variant="contained" onClick={handleSearch} >Search</Button>
-        </Stack>
+          
         </Box >
     )
 
