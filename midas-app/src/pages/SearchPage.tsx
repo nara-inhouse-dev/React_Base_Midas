@@ -58,7 +58,7 @@ export default function SearchPage() {
       const formattedRows = hits.map((hit: any, index: number) => {
         const source = hit._source;
         return {
-          id: source.DOC_ID_Flex,
+          docId: source.DOC_ID_Flex,
           source: 'Flex',
           cNumber: source.DOC_ID_Flex || 'N/A',
           aNumber: source.A_NUMBER_Flex || 'N/A',
