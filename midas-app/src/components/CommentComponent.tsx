@@ -1,0 +1,115 @@
+import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import { Typography, TextField, Button, Stack, Modal, IconButton, Tooltip } from '@mui/material';
+import { Close } from '@mui/icons-material';
+
+interface CommentComponentProps {
+  documentID: string;
+  source: string;
+  existingComment?: string; // Optional existing comment
+  open: boolean; // Controls whether the modal is open
+  onClose: () => void; // Callback to close the modal
+  onSave: (documentID: string, source: string, comment: string) => void;
+  onDelete: (documentID: string, source: string) => void;
+}
+
+const CommentComponent: React.FC<CommentComponentProps> = ({
+  documentID,
+  source,
+  existingComment = '',
+  open,
+  onClose,
+  onSave,
+  onDelete,
+}) => {
+  const [comment, setComment] = useState<string>(existingComment); // State to hold the comment
+
+  useEffect(() => {
+    // Load the existing comment when the modal opens
+    if (open) {
+      setComment(existingComment);
+    }
+  }, [open, existingComment]);
+
+  const handleSave = () => {
+    if (comment.trim() === '') {
+      alert('Comment cannot be empty.');
+      return;
+    }
+    onSave(documentID, source, comment);
+    onClose(); // Close the modal after saving
+  };
+
+  const handleDelete = () => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this comment?');
+    if (confirmDelete) {
+      onDelete(documentID, source);
+      setComment(''); // Clear the comment field
+      onClose(); // Close the modal after deleting
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <Box
+        sx={{
+          //position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          p: 4,
+          borderRadius: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          position: 'relative', // To position the close button
+        }}
+      >
+        {/* Close Button in the Top-Right Corner */}
+        <Tooltip title="Close">
+          <IconButton
+            onClick={onClose}
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+            }}
+          >
+            <Close />
+          </IconButton>
+        </Tooltip>
+
+        <Typography variant="h6" component="h2">
+          Comment for Document
+        </Typography>
+        <Typography variant="body2">
+          <strong>Document ID:</strong> {documentID}
+        </Typography>
+        <Typography variant="body2">
+          <strong>Source:</strong> {source}
+        </Typography>
+        <TextField
+          label="Comment"
+          multiline
+          rows={4}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="Enter your comment here..."
+        />
+        <Stack direction="row" spacing={2} justifyContent="flex-end">
+          <Button variant="contained" onClick={handleSave}>
+            Save
+          </Button>
+          <Button variant="outlined" color="error" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Stack>
+      </Box>
+    </Modal>
+  );
+};
+
+export default CommentComponent;
