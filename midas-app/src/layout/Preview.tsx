@@ -42,7 +42,7 @@ export default function Preview() {
       };
     
     return (
-        <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+        <Box sx={{ minHeight: '100vh', display: 'flex',placeContent: 'center', flexDirection: 'column' }}>
             <Box
                 component='img'
                 sx={{
@@ -52,7 +52,7 @@ export default function Preview() {
                     display: { xs: 'none', md: 'flex' },
                 }}
                 alt="National Archives Logo"
-                src="archie-ai-bluec.png"
+                src="512-Nara-logo.png"
             />
             
           
