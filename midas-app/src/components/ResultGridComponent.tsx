@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef, GridInitialStateCommunity } from '@mui/x-data-grid';
-import { Stack, Button, Tooltip } from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Stack, Button, Tooltip,Typography } from '@mui/material';
 import { FolderOpen, Preview, Comment as CommentIcon, Lock, LockOpen } from '@mui/icons-material';
 
 interface ResultGridComponentProps {
@@ -25,7 +25,7 @@ const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
     {
       field: 'actions',
       headerName: 'Actions',
-      flex: 3,
+      flex: 2,
       renderCell: (params) => (
         <Stack direction="row" spacing={1}>
           <Tooltip title="Toggle Access">
@@ -80,28 +80,42 @@ const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
   ];
 
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        loading={loading}
-        disableSelectionOnClick
-        initialState={{
-          columns: {
-            columnVisibilityModel: {
-              middleName: false, // Hide the "Middle Name" column
-              POE: false, // Hide the "Port of Entry" column
-              YOE: false, // Hide the "Year of Entry" column
-              countryOfBirth: false, // Hide the "Country of Birth" column
-              dob: false, // Hide the "Day of Birth" column
-              mob: false, // Hide the "Month of Birth" column
-              yob: false, // Hide the "Year of Birth" column
+    <Box >
+    {/* Header for the Search Results Grid */}
+    <Typography variant="h5" sx={{  textDecoration: 'none',
+                                    fontStyle: 'normal',
+                                    fontWeight: 'semi-bold',
+                                    fontFamily: 'Roboto Mono'}}>
+      Search Results
+    </Typography>
+      <Box sx={{ height: 350, width: '100%',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          loading={loading}
+          disableSelectionOnClick
+          initialState={{
+            columns: {
+              columnVisibilityModel: {
+                middleName: false, // Hide the "Middle Name" column
+                POE: false, // Hide the "Port of Entry" column
+                YOE: false, // Hide the "Year of Entry" column
+                countryOfBirth: false, // Hide the "Country of Birth" column
+                dob: false, // Hide the "Day of Birth" column
+                mob: false, // Hide the "Month of Birth" column
+                yob: false, // Hide the "Year of Birth" column
+              },
             },
-          },
-        }}
-      />
+          }}
+        />
+        {rows.length === 0 && !loading && (
+          <Typography variant="body2" sx={{ textAlign: 'center', mt: 2 }}>
+            No results found.
+          </Typography>
+        )}
+      </Box>
     </Box>
   );
 };

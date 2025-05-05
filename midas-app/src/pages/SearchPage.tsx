@@ -5,13 +5,14 @@ import ResultGridComponent from '../components/ResultGridComponent';
 import OpenFolderComponent from '../components/OpenFolderComponent';
 import ViewImageComponent from '../components/ViewImageComponent';
 import CommentComponent from '../components/CommentComponent';
+import { green } from '@mui/material/colors';
 
 const apiEndpoint = 'https://kl96k8ziqe.execute-api.us-east-1.amazonaws.com/Dev/getflexdata';
 
 export default function SearchPage() {
   const [rows, setRows] = useState([]); // State to hold search results
   const [loading, setLoading] = useState(false); // State to show loading indicator
-  const [query, setQuery] = useState({ firstName: '', lastName: '', cNumber: '', aNumber: '' });
+  const [query, setQuery] = useState({ firstName: '', lastName: '', cNumber: '', aNumber: '' ,yob:''});
   const [showGrid, setShowGrid] = useState(false); // State to control grid visibility
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
@@ -145,28 +146,40 @@ export default function SearchPage() {
   return (
     <Box
       sx={{
-        p: 10,
+        p: 9,
         borderRadius: 2,
-        background: 'lightgray',
+        background: 'white',
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        flexDirection: 'column',        
+        alignItems: 'stretch',
+        gap: 5,
         justifyContent: 'flex-start',
         minHeight: '100vh',
         width: '100%',
       }}
     >
-      <Typography variant="h4" sx={{ mb: 4 }}>
-        Midas Data Search
-      </Typography>
-
+       {/* Header */}
+       <Typography
+      variant="h5"
+      sx={{
+        
+        textDecoration: 'none',
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        fontFamily: 'Roboto Mono',
+        mb: -11,
+      }}
+    >
+      Search Criteria
+    </Typography>
       {/* Search Form */}
-      <Box my={10} sx={{ gap: 1, display: 'flex', fontWeight: 'bold' }}>
-        <Stack spacing={5} direction="row" flexWrap="wrap" useFlexGap>
+      <Box my={10} sx={{ gap: 1, display: 'flex', fontWeight: 'bold',md:1 }}>
+        <Stack spacing={4} direction="row" flexWrap="wrap" useFlexGap>
           <TextField label="First Name" name="firstName" value={query.firstName} onChange={handleInputChange} />
           <TextField label="Last Name" name="lastName" value={query.lastName} onChange={handleInputChange} />
           <TextField label="C Number" name="cNumber" value={query.cNumber} onChange={handleInputChange} />
           <TextField label="A Number" name="aNumber" value={query.aNumber} onChange={handleInputChange} />
+          <TextField label="YOB" name="yob" value={query.yob} onChange={handleInputChange} />
           <Button variant="contained" onClick={handleSearch} disabled={loading}>
             {loading ? 'Searching...' : 'Search'}
           </Button>

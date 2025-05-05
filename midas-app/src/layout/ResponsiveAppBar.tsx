@@ -38,21 +38,7 @@ function ResponsiveAppBar() {
                         alt="National Archives Logo"
                         src="https://www.archives.gov/nara-banner/nara-eagle-logo-branding2.svg"
                     />
-                    
-
-                </Box>
-                <Toolbar
-                    sx={{
-                        bgcolor: ' #f5f5f0',
-                        '&.MuiToolbar-root': {
-                            minHeight: '24px',
-                        },
-
-                    }}
-                    disableGutters>
-
-                    <Box pl={0} sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Box sx={{ color: '#23496d', textDecoration: 'none' }} to="/" component={RouterLink}>
+                     <Box sx={{ color: '#23496d', textDecoration: 'none' }} to="/" component={RouterLink}>
                             <Typography variant='h4'
                                 sx={{
                                     pl: 3,
@@ -62,14 +48,14 @@ function ResponsiveAppBar() {
                                     fontFamily: 'Roboto Mono',
                                 }}
                             >
-                                 Midas
+                                 MiDAS
                             </Typography>
 
-                        </Box>
+                    </Box>
+                   
+                       
 
-
-
-                        <Box sx={{ pr: 3, justifyContent: { md: 'flex-end' }, display: { xs: 'none', md: 'flex' } }}>
+                    <Box  pl={0} sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
                             {pages.map((page) => (
 
                                 <Button
@@ -94,85 +80,63 @@ function ResponsiveAppBar() {
                                 </Button>
                             ))}
                         </Box>
+                    <Box sx={{ display: 'flex', flexGrow: 0 }}>
 
-                    </Box>
+<IconButton
+    size="large"
+    aria-label="account of current user"
+    aria-controls="menu-appbar"
+    aria-haspopup="true"
+    onClick={handleOpenNavMenu}
 
-                    { /* Hamburger menu for mobile */}
-                    <Box px={0} py={0.5} sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'flex-end', alignItems: 'center' }} >
-                        <Box sx={{ display: 'flex', flexGrow: 0 }}>
+    sx={{
+        color: '#23496d',
+    }}
+>
+    <MenuIcon />
+</IconButton>
 
-                            <IconButton
-                                size="large"
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleOpenNavMenu}
+<Menu
+    id="menu-appbar"
+    anchorEl={anchorElNav}
+    anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+    }}
+    keepMounted
+    transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+    }}
+    open={Boolean(anchorElNav)}
+    onClose={handleCloseNavMenu}
+    sx={{
+        display: { xs: 'block', md: 'none' },
+    }}
+>
+    {pages.map((page) => (
+        <MenuItem key={page}
+            onClick={handleCloseNavMenu}
+            component={RouterLink}
+            to={page.replace(/\s+/g, '-').replace(/\./g, '').toLowerCase()}
+        >
+            <Typography textAlign="center"
+                sx={{
+                    display: { xs: 'flex', md: 'none' },
+                    '&:hover': {
+                        textDecoration: 'underline',
+                        textUnderlineOffset: '7px',
+                    },
+                }}
+            >{page}</Typography>
+        </MenuItem>
+    ))}
+</Menu>
+</Box>            
 
-                                sx={{
-                                    color: '#23496d',
-                                }}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: { xs: 'block', md: 'none' },
-                                }}
-                            >
-                                {pages.map((page) => (
-                                    <MenuItem key={page}
-                                        onClick={handleCloseNavMenu}
-                                        component={RouterLink}
-                                        to={page.replace(/\s+/g, '-').replace(/\./g, '').toLowerCase()}
-                                    >
-                                        <Typography textAlign="center"
-                                            sx={{
-                                                display: { xs: 'flex', md: 'none' },
-                                                '&:hover': {
-                                                    textDecoration: 'underline',
-                                                    textUnderlineOffset: '7px',
-                                                },
-                                            }}
-                                        >{page}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-                        <Box sx={{ color: '#23496d', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }} to="/" component={RouterLink}>
-                            <Typography variant='h4'
-                                sx={{
-
-
-                                    fontStyle: 'normal',
-                                    fontWeight: 'semi-bold',
-                                    fontFamily: 'Roboto Mono',
-                                }}
-                            >
-                                 Midas Search App
-                            </Typography>
-
-                        </Box>
-
-
-
-
-                    </Box>
-
-                </Toolbar>
+</Box>
+               
+               
                 
             </Box >
         </AppBar >

@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainLayout from './layout/MainLayout';
 import SearchPage from './pages/SearchPage';
+import Preview from './layout/Preview';
 
 
 const theme = createTheme({
@@ -16,7 +17,8 @@ const MainRoutes = {
   element: <MainLayout />,
   children: [
     { element: <SearchPage />, path: '/', index: true },
-   
+    { element: <SearchPage />, path: '/home'},
+    { element: <Preview />, path: '/contact'},
   ],
 };
 
