@@ -3,14 +3,15 @@ import Box from '@mui/material/Box';
 import { Typography, TextField, Button, Stack, Modal, IconButton, Tooltip } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
+// Define the props for the CommentComponent
 interface CommentComponentProps {
-  documentID: string;
-  source: string;
+  documentID: string; // The ID of the document
+  source: string; // The source of the document
   existingComment?: string; // Optional existing comment
   open: boolean; // Controls whether the modal is open
   onClose: () => void; // Callback to close the modal
-  onSave: (documentID: string, source: string, comment: string) => void;
-  onDelete: (documentID: string, source: string) => void;
+  onSave: (documentID: string, source: string, comment: string) => void; // Callback to save the comment
+  onDelete: (documentID: string, source: string) => void; // Callback to delete the comment
 }
 
 const CommentComponent: React.FC<CommentComponentProps> = ({
@@ -31,7 +32,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
     }
   }, [open, existingComment]);
 
-  const handleSave = () => {
+  const handleSave = (): void => {
     if (comment.trim() === '') {
       alert('Comment cannot be empty.');
       return;
@@ -40,7 +41,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
     onClose(); // Close the modal after saving
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     const confirmDelete = window.confirm('Are you sure you want to delete this comment?');
     if (confirmDelete) {
       onDelete(documentID, source);
@@ -53,7 +54,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          //position: 'absolute',
+          position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -82,6 +83,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
           </IconButton>
         </Tooltip>
 
+        {/* Modal Content */}
         <Typography variant="h6" component="h2">
           Comment for Document
         </Typography>

@@ -1,16 +1,38 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Stack, Button, Tooltip,Typography } from '@mui/material';
+import { Stack, Button, Tooltip, Typography } from '@mui/material';
 import { FolderOpen, Preview, Comment as CommentIcon, Lock, LockOpen } from '@mui/icons-material';
 
+// Define the type for a single row in the grid
+interface RowData {
+  docId: string;
+  source: string;
+  aNumber: string;
+  cNumber: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  yob?: string;
+  mob?: string;
+  dob?: string;
+  countryOfBirth?: string;
+  POE?: string;
+  YOE?: string;
+  filePath: string;
+  imageUrl: string;
+  access?: boolean;
+  comment?: string;
+}
+
+// Define the props for the ResultGridComponent
 interface ResultGridComponentProps {
-  rows: any[]; // Data rows for the grid
+  rows: RowData[]; // Array of rows for the grid
   loading: boolean; // Loading state for the grid
   onToggleAccess: (docId: string) => void; // Callback for toggling access
   onOpenFolder: (folderPath: string) => void; // Callback for opening folder
   onViewImage: (imageUrl: string) => void; // Callback for viewing image
-  onComment: (row: any) => void; // Callback for adding/editing comments
+  onComment: (row: RowData) => void; // Callback for adding/editing comments
 }
 
 const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
@@ -76,19 +98,31 @@ const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
     { field: 'countryOfBirth', headerName: 'Country of Birth', flex: 1 },
     { field: 'POE', headerName: 'Port of Entry', flex: 1 },
     { field: 'YOE', headerName: 'Year of Entry', flex: 1 },
-,
   ];
 
   return (
-    <Box >
-    {/* Header for the Search Results Grid */}
-    <Typography variant="h5" sx={{  textDecoration: 'none',
-                                    fontStyle: 'normal',
-                                    fontWeight: 'semi-bold',
-                                    fontFamily: 'Roboto Mono'}}>
-      Search Results
-    </Typography>
-      <Box sx={{ height: 350, width: '100%',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Box>
+      {/* Header for the Search Results Grid */}
+      <Typography
+        variant="h5"
+        sx={{
+          textDecoration: 'none',
+          fontStyle: 'normal',
+          fontWeight: 'semi-bold',
+          fontFamily: 'Roboto Mono',
+        }}
+      >
+        Search Results
+      </Typography>
+      <Box
+        sx={{
+          height: 350,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <DataGrid
           rows={rows}
           columns={columns}
