@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { Typography, Button, Stack, Modal, IconButton, Tooltip } from '@mui/material';
 import { ZoomIn, ZoomOut, RotateLeft, Close } from '@mui/icons-material';
 
+// Define the props for the ViewImageComponent
 interface ViewImageComponentProps {
   open: boolean; // Controls whether the modal is open
   imageUrl: string; // URL of the image to display
@@ -16,18 +17,19 @@ const ViewImageComponent: React.FC<ViewImageComponentProps> = ({
   title = 'View Image',
   onClose,
 }) => {
-  const [zoom, setZoom] = useState(1); // State for zoom level
-  const [rotation, setRotation] = useState(0); // State for rotation angle
+  const [zoom, setZoom] = useState<number>(1); // State for zoom level
+  const [rotation, setRotation] = useState<number>(0); // State for rotation angle
 
-  const handleZoomIn = () => setZoom((prev) => prev + 0.1);
-  const handleZoomOut = () => setZoom((prev) => Math.max(0.1, prev - 0.1));
-  const handleRotate = () => setRotation((prev) => prev + 90);
+  // Handlers for zoom and rotation
+  const handleZoomIn = (): void => setZoom((prev) => prev + 0.1);
+  const handleZoomOut = (): void => setZoom((prev) => Math.max(0.1, prev - 0.1));
+  const handleRotate = (): void => setRotation((prev) => prev + 90);
 
   return (
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          //position: 'absolute',
+          position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -56,9 +58,12 @@ const ViewImageComponent: React.FC<ViewImageComponentProps> = ({
           </IconButton>
         </Tooltip>
 
+        {/* Title */}
         <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
           {title}
         </Typography>
+
+        {/* Image */}
         <Box
           component="img"
           src={imageUrl}
@@ -69,6 +74,8 @@ const ViewImageComponent: React.FC<ViewImageComponentProps> = ({
             transform: `scale(${zoom}) rotate(${rotation}deg)`,
           }}
         />
+
+        {/* Controls */}
         <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
           <Button onClick={handleZoomIn} startIcon={<ZoomIn />}>
             Zoom In
