@@ -191,7 +191,7 @@ const SearchPage: React.FC = () => {
   return (
     <Box
       sx={{
-        p: 9,
+        p: { xs: 2, sm: 4, md: 9 }, // Padding adjusts based on screen size
         borderRadius: 2,
         background: 'white',
         display: 'flex',
@@ -218,8 +218,22 @@ const SearchPage: React.FC = () => {
       Search Criteria
       </Typography>
       {/* Search Form */}
-      <Box my={10} sx={{ gap: 1, display: 'flex', fontWeight: 'bold',md:1 }}>
-        <Stack spacing={4} direction="row" flexWrap="wrap" useFlexGap>
+      <Box
+        my={9}
+        sx={{
+          gap: 1,
+          display: 'flex',
+         // flexDirection: 'column', // Stack vertically on smaller screens
+          flexDirection: { xs: 'column', sm: 'row' , md: 'none'},
+          fontWeight: 'bold',
+        }}
+      >
+        <Stack
+          spacing={4}
+          direction={{ xs: 'column', sm: 'row' }} // Column on small screens, row on larger screens
+          flexWrap="wrap"
+          useFlexGap
+        >
           <TextField label="First Name" name="firstName" value={query.firstName} onChange={handleInputChange} />
           <TextField label="Last Name" name="lastName" value={query.lastName} onChange={handleInputChange} />
           <TextField label="C Number" name="cNumber" value={query.cNumber} onChange={handleInputChange} />
@@ -230,7 +244,16 @@ const SearchPage: React.FC = () => {
           </Button>
         </Stack>
       </Box>
-
+      <Box
+        my={-10}
+        sx={{
+          //gap: 1,
+          display: 'flex',
+         // flexDirection: 'column', // Stack vertically on smaller screens
+          //flexDirection: { xs: 'column', sm: 'row' , md: 'none'},
+          fontWeight: 'bold',
+        }}
+      >
       {/* Results Grid */}
       {showGrid && rows.length > 0 && (
         <ResultGridComponent
@@ -242,7 +265,7 @@ const SearchPage: React.FC = () => {
           onComment={handleComment}
         />
       )}
-
+      </Box>
       {/* Snackbar */}
       <Snackbar
         open={snackbarOpen}
