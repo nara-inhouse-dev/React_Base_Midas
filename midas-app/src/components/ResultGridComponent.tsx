@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Stack, Button, Tooltip, Typography } from '@mui/material';
-import { FolderOpen, Preview, Comment as CommentIcon, Lock, LockOpen } from '@mui/icons-material';
+import { FolderOpen, Preview,  Lock, LockOpen, CommentBank,ChatBubbleOutline } from '@mui/icons-material';
 
 // Define the type for a single row in the grid
 interface RowData {
@@ -74,12 +74,20 @@ const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
               startIcon={<Preview />}
             />
           </Tooltip>
-          <Tooltip title="Save/Delete Comment">
+          <Tooltip  title={
+            params.row.comment && params.row.comment.trim() !== ''
+              ? 'Edit/Delete Comment' // Tooltip when comment is not empty
+              : 'Add Comment' // Tooltip when comment is empty
+          }>
             <Button
-              variant="text"
+              variant="outlined"
               size="small"
               onClick={() => onComment(params.row)}
-              startIcon={<CommentIcon />}
+              startIcon={
+                params.row.comment && params.row.comment.trim() !== ''
+                  ? <CommentBank /> // Show CommentBankOutlined if comment is not empty
+                  : <ChatBubbleOutline /> // Show CommentIcon if comment is empty
+              }
             />
           </Tooltip>
         </Stack>
@@ -101,7 +109,7 @@ const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
   ];
 
   return (
-    <Box>
+    <Box sx={{ width: '100%', p: { xs: 2, sm: 3, md: 6 } }}>
       {/* Header for the Search Results Grid */}
       <Typography
         variant="h5"
@@ -110,17 +118,20 @@ const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
           fontStyle: 'normal',
           fontWeight: 'semi-bold',
           fontFamily: 'Roboto Mono',
+          textAlign: { xs: 'center', sm: 'left' }, // Center on small screens
+          mb: 2,
         }}
       >
         Search Results
       </Typography>
       <Box
-        sx={{
-          height: 350,
+        sx={{ 
+          height:'90%', // Adjust height based on screen size
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+         // overflowX: 'auto', // Allow horizontal scrolling for small screens
         }}
       >
         <DataGrid
@@ -141,6 +152,21 @@ const ResultGridComponent: React.FC<ResultGridComponentProps> = ({
                 mob: false, // Hide the "Month of Birth" column
                 yob: false, // Hide the "Year of Birth" column
               },
+            },
+          }}
+          sx={{
+            '& .MuiDataGrid-root': {
+              fontSize: { xs: '12px', sm: '14px', md: '16px' }, // Adjust font size for grid
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              backgroundColor: '#f0f0f0', // Add a background color to column headers
+              fontSize: { xs: '12px', sm: '14px', md: '16px' }, // Adjust font size for headers
+            },
+            '& .MuiDataGrid-cell': {
+              padding: { xs: '4px', sm: '8px' }, // Adjust cell padding for smaller screens
+            },
+            '& .MuiDataGrid-virtualScroller': {
+              overflowX: 'hidden', // Prevent horizontal scrolling inside the grid
             },
           }}
         />
