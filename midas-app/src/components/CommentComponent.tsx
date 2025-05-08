@@ -6,16 +6,18 @@ import { Close } from '@mui/icons-material';
 // Define the props for the CommentComponent
 interface CommentComponentProps {
   documentID: string; // The ID of the document
+  rowID: string; // The ID of the row
   source: string; // The source of the document
   existingComment?: string; // Optional existing comment
   open: boolean; // Controls whether the modal is open
   onClose: () => void; // Callback to close the modal
-  onSave: (documentID: string, source: string, comment: string) => void; // Callback to save the comment
-  onDelete: (documentID: string, source: string) => void; // Callback to delete the comment
+  onSave: (documentID: string, rowID:string, source: string, comment: string) => void; // Callback to save the comment
+  onDelete: (documentID: string, rowID:string,source: string) => void; // Callback to delete the comment
 }
 
 const CommentComponent: React.FC<CommentComponentProps> = ({
   documentID,
+  rowID,
   source,
   existingComment = '',
   open,
@@ -37,14 +39,14 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
       alert('Comment cannot be empty.');
       return;
     }
-    onSave(documentID, source, comment);
+    onSave(documentID, rowID,source, comment);
     onClose(); // Close the modal after saving
   };
 
   const handleDelete = (): void => {
     const confirmDelete = window.confirm('Are you sure you want to delete this comment?');
     if (confirmDelete) {
-      onDelete(documentID, source);
+      onDelete(documentID, rowID,source);
       setComment(''); // Clear the comment field
       onClose(); // Close the modal after deleting
     }
@@ -54,7 +56,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          position: 'absolute',
+          //position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -89,6 +91,9 @@ const CommentComponent: React.FC<CommentComponentProps> = ({
         </Typography>
         <Typography variant="body2">
           <strong>Document ID:</strong> {documentID}
+        </Typography>
+        <Typography variant="body2">
+          <strong>Row ID:</strong> {rowID}
         </Typography>
         <Typography variant="body2">
           <strong>Source:</strong> {source}
